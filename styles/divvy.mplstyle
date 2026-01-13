@@ -1,0 +1,87 @@
+# =========================================================
+# Matplotlib Style Settings: Divvy Tripdata Visualizations
+# =========================================================
+
+# ---------------------------------------------------------
+# 1. FIGURE
+# ---------------------------------------------------------
+
+figure.dpi : 300
+figure.autolayout : True
+savefig.dpi : 300
+
+# ---------------------------------------------------------
+# 2. FONT
+# ---------------------------------------------------------
+
+font.family : sans-serif
+font.sans-serif : DejaVu Sans, Verdana, Arial, sans-serif
+text.color : black
+
+# ---------------------------------------------------------
+# 3. AXES
+# ---------------------------------------------------------
+
+# Colors
+axes.prop_cycle : cycler('color', ['mediumblue', 'orange', 'lightgray'])
+
+# Lines & Spines
+axes.linewidth : 1.5
+axes.spines.top : False
+axes.spines.right : False
+
+# Title
+axes.titlesize : 28
+axes.titlepad : 28
+axes.titleweight : bold
+
+# Label
+axes.labelsize : 22
+axes.labelpad : 22
+axes.labelweight : normal
+
+# ---------------------------------------------------------
+# 4. TICKS
+# ---------------------------------------------------------
+
+# X-Axis
+xtick.labelsize : 16
+xtick.major.size : 8
+xtick.major.width : 1.5
+xtick.minor.size : 4
+xtick.minor.width : 1.5
+
+# Y-Axis
+ytick.labelsize : 16
+ytick.major.size : 8
+ytick.major.width : 1.5
+ytick.minor.size : 4
+ytick.minor.width : 1.5
+
+# ---------------------------------------------------------
+# 5. GRID
+# ---------------------------------------------------------
+
+axes.grid : True
+axes.axisbelow : True
+grid.linestyle : "-"
+grid.alpha : 0.4
+
+# ---------------------------------------------------------
+# 6. PLOT ELEMENTS
+# ---------------------------------------------------------
+
+lines.marker : o
+lines.linewidth : 3
+lines.markersize : 6
+
+# ---------------------------------------------------------
+# 7. LEGEND
+# ---------------------------------------------------------
+
+legend.fontsize : 16
+legend.frameon : True
+legend.framealpha : 1.0
+legend.fancybox : False
+legend.edgecolor : black
+legend.facecolor : white
