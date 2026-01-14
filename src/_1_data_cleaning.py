@@ -6,7 +6,7 @@ Created on Fri Dec 12 15:42:25 2025
 @author: Dylan Bretz Jr.
 
 Cyclistic Bike-Share Analysis Case Study Python Script (Part 1 of 3)
-- Combine, clean, explore, and transform data
+- Combine, clean, and transform data
 
 Description:
     Combines monthly CSV files, cleans data by removing outliers

@@ -9,7 +9,7 @@ Cyclistic Bike-Share Analysis Case Study Python Script (Part 2 of 3)
 - Analyze and visualize cleaned data
 
 Description:
-    Imports cleaned dataset, performs aggregation analysis to
+    Imports cleaned dataset, performs statistical analysis to
     compare user behavior, and generates static visualizations
     to illustrate key findings.
 
