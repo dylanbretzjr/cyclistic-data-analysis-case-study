@@ -1190,7 +1190,7 @@ for group, median in median_values.items():
         ymin=y - 0.40,
         ymax=y + 0.40,
         colors='black',
-        linewidth=3,
+        linewidth=1.5,
         zorder=3
     )
 
