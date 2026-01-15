@@ -241,11 +241,11 @@ top_roundtrips_c = get_ranking(
 
 # ---- Prep heat map data ----
 
-sum_day_hour_m = get_ranking(
+density_day_hour_m = get_ranking(
     df, ['start_weekday', 'start_hour'], 'member'
 )
 
-sum_day_hour_c = get_ranking(
+density_day_hour_c = get_ranking(
     df, ['start_weekday', 'start_hour'], 'casual'
 )
 
@@ -892,31 +892,31 @@ plt.show()
 
 #%% fig_4.2 Ride density per start hour and day of week by membership status
 
-pivot_sum_day_hour_m = (
-    sum_day_hour_m
+pivot_density_day_hour_m = (
+    density_day_hour_m
         .pivot(index='start_weekday', columns='start_hour', values='count')
         .reindex(index=range(7), columns=range(24), fill_value=0)
 )
 
-pivot_sum_day_hour_c = (
-    sum_day_hour_c
+pivot_density_day_hour_c = (
+    density_day_hour_c
         .pivot(index='start_weekday', columns='start_hour', values='count')
         .reindex(index=range(7), columns=range(24), fill_value=0)
 )
 
-pivot_sum_day_hour_m = pivot_sum_day_hour_m.div(
-    pivot_sum_day_hour_m.sum(axis=1), axis=0
+pivot_density_day_hour_m = pivot_density_day_hour_m.div(
+    pivot_density_day_hour_m.sum(axis=1), axis=0
 )
-pivot_sum_day_hour_c = pivot_sum_day_hour_c.div(
-    pivot_sum_day_hour_c.sum(axis=1), axis=0
+pivot_density_day_hour_c = pivot_density_day_hour_c.div(
+    pivot_density_day_hour_c.sum(axis=1), axis=0
 )
 
 day_labels  = WEEKDAY_LABELS
 hour_labels = list(range(24))
 
 max_share = max(
-    pivot_sum_day_hour_m.values.max(),
-    pivot_sum_day_hour_c.values.max()
+    pivot_density_day_hour_m.values.max(),
+    pivot_density_day_hour_c.values.max()
 )
 
 # ---- Combined heat maps
@@ -926,7 +926,7 @@ with plt.rc_context({'figure.autolayout': False}):
     fig, axes = plt.subplots(1, 2, figsize=(16, 8), sharey=True)
 
     sns.heatmap(
-        pivot_sum_day_hour_m,
+        pivot_density_day_hour_m,
         cmap='rocket_r',
         vmin=0,
         vmax=max_share,
@@ -935,7 +935,7 @@ with plt.rc_context({'figure.autolayout': False}):
         ax=axes[0]
     )
     sns.heatmap(
-        pivot_sum_day_hour_c,
+        pivot_density_day_hour_c,
         cmap='rocket_r',
         vmin=0,
         vmax=max_share,
@@ -1011,7 +1011,7 @@ with plt.rc_context({'figure.autolayout': False}):
 fig, ax = plt.subplots(figsize=(10, 8))
 
 sns.heatmap(
-    pivot_sum_day_hour_m,
+    pivot_density_day_hour_m,
     cmap='rocket_r',
     vmin=0,
     vmax=max_share,
@@ -1063,7 +1063,7 @@ plt.show()
 fig, ax = plt.subplots(figsize=(10, 8))
 
 sns.heatmap(
-    pivot_sum_day_hour_c,
+    pivot_density_day_hour_c,
     cmap='rocket_r',
     vmin=0,
     vmax=max_share,
