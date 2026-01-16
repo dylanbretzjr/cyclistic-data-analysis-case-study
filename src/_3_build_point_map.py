@@ -240,63 +240,96 @@ fig.update_layout(
     },
 
     margin={'l': 75, 'r': 0, 't': 125, 'b': 0},
-
+    
     annotations=[
-        {
-            'text': '<b>Start Location</b>',
-            'x': 0.20,
-            'y': 1.06,
-            'xref': 'paper',
-            'yref': 'paper',
-            'showarrow': False,
-            'font': {'size': 22, 'color': 'black'}
-        },
-        {
-            'text': '<b>End Location</b>',
-            'x': 0.73,
-            'y': 1.06,
-            'xref': 'paper',
-            'yref': 'paper',
-            'showarrow': False,
-            'font': {'size': 22, 'color': 'black'}},
-        {
-            'text': '<b>Members</b>',
-            'x': 0.05,
-            'y': 0.85,
-            'xref': 'paper',
-            'yref': 'paper',
-            'showarrow': False,
-            'xanchor': 'right',
-            'textangle': -90,
-            'font': {'size': 22, 'color': 'black'}
-        },
-        {
-            'text': '<b>Casual Riders</b>',
-            'x': 0.05,
-            'y': 0.15,
-            'xref': 'paper',
-            'yref': 'paper',
-            'showarrow': False,
-            'xanchor': 'right',
-            'textangle': -90,
-            'font': {'size': 22, 'color': 'black'}
-        },
-    ],
+    # --- TOP LABELS ---
+    {
+        'text': '<b>Start Location</b>',
+        'x': sum(LEFT_X) / 2,  
+        'y': 1.06,
+        'xref': 'paper',
+        'yref': 'paper',
+        'showarrow': False,
+        'xanchor': 'center',
+        'yanchor': 'top',
+        'font': {'size': 22, 'color': 'black'}
+    },
+    {
+        'text': '<b>End Location</b>',
+        'x': sum(RIGHT_X) / 2, 
+        'y': 1.06,
+        'xref': 'paper',
+        'yref': 'paper',
+        'showarrow': False,
+        'xanchor': 'center',
+        'yanchor': 'top',
+        'font': {'size': 22, 'color': 'black'}
+    },
+    
+    # --- SIDE LABELS ---
+    {
+        'text': '<b>Members</b>',
+        'x': LEFT_X[0] / 2,   
+        'y': sum(TOP_Y) / 2, 
+        'xref': 'paper',
+        'yref': 'paper',
+        'showarrow': False,
+        'xanchor': 'left',
+        'yanchor': 'middle',
+        'textangle': -90,
+        'font': {'size': 22, 'color': 'black'}
+    },
+    {
+        'text': '<b>Casual Riders</b>',
+        'x': LEFT_X[0] / 2,
+        'y': sum(BOT_Y) / 2, 
+        'xref': 'paper',
+        'yref': 'paper',
+        'showarrow': False,
+        'xanchor': 'left',
+        'yanchor': 'middle',
+        'textangle': -90,
+        'font': {'size': 22, 'color': 'black'}
+    },
+],
+    
     uirevision='locked-view',
     dragmode='pan',
+
+    autosize=False,
+    width=1600,
+    height=900,
 )
 
 # =============================================================================
-#%% 3. LINK PAN/ZOOM
+#%% 3. LINK PAN/ZOOM & ADD RESPONSIVE SCALING
 # =============================================================================
 # Steps:
-# - Listen for plotly_relayout events (pan/zoom) on any map subplot
-# - Copy center/zoom/bearing/pitch changes to the other subplots
+# - Inject global CSS via JS to force full-viewport dimensions and hide scrollbars
+# - Sync pan, zoom, bearing, and pitch events across all 4 map subplots
+# - Calculate "Best Fit" scale ratio based on available window width and height
+# - Center the map element in the viewport and apply the calculated scale
 
-SYNC_JS = r"""
+INJECT_JS = r"""
+// 1. INJECT CSS (Via JS logic)
+var style = document.createElement('style');
+style.innerHTML = `
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: hidden !important; 
+    background-color: white;
+  }
+`;
+document.head.appendChild(style);
+
+// 2. MAIN LOGIC
 var gd = document.getElementsByClassName('plotly-graph-div')[0];
 var maps = ['map', 'map2', 'map3', 'map4'];
 
+// --- SYNC PAN/ZOOM ---
 var syncing = false;
 
 function findSourceMap(e){
@@ -330,7 +363,6 @@ function buildUpdates(e){
   return Object.keys(updates).length ? updates : null;
 }
 
-// IMPORTANT: sync ONLY on plotly_relayout (drag end), never during relayouting
 gd.on('plotly_relayout', function(e){
   if(syncing) return;
 
@@ -344,14 +376,41 @@ gd.on('plotly_relayout', function(e){
     syncing = false;
   });
 });
+
+// --- BEST FIT SCALING LOGIC ---
+function resizeMap() {
+    var targetW = 1600; 
+    var targetH = 900; 
+    var windowW = window.innerWidth;
+    var windowH = window.innerHeight;
+    
+    // Scale based on whichever dimension is the limiting factor
+    var scale = Math.min(windowW / targetW, windowH / targetH);
+    
+    // Center and Apply Scale
+    gd.style.position = 'absolute';
+    gd.style.left = '50%';
+    gd.style.top = '50%';
+    gd.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+    gd.style.transformOrigin = 'center center';
+}
+
+window.addEventListener('resize', resizeMap);
+window.addEventListener('load', resizeMap);
+
+// Safety loop
+var attempts = 0;
+var interval = setInterval(function() {
+    resizeMap();
+    attempts++;
+    if (attempts > 10) clearInterval(interval); 
+}, 100);
 """
 
 # =============================================================================
 #%% 4. EXPORT HTML
 # =============================================================================
 
-# Write linked HTML
-# Ensure output directory exists
 viz_html = config.VIZ_PATH / 'html'
 viz_html.mkdir(parents=True, exist_ok=True)
 
@@ -360,14 +419,15 @@ pio.write_html(
     file=viz_html / 'membership_ride_location_map.html',
     auto_open=True,
     include_plotlyjs='cdn',
-    post_script=SYNC_JS,
+    post_script=INJECT_JS,
     config={
         'scrollZoom': True,
+        'responsive': False,
         'toImageButtonOptions': {
             'format': 'png',
             'filename': 'membership_ride_location_map',
-            'height': 900,
             'width': 1600,
+            'height': 900,
             'scale': 2
         }
     }
