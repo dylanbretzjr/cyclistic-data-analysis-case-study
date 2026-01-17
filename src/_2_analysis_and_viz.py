@@ -124,8 +124,7 @@ sum_month = get_counts_and_pct(
 )
 
 sum_week = get_counts_and_pct(
-    df.assign(start_week=df['started_at'].dt.to_period('W').dt.start_time),
-    ['start_week', 'member_casual']
+    df, ['start_week', 'member_casual']
 )
 
 sum_weekday = get_counts_and_pct(
@@ -438,7 +437,8 @@ tick_frequency = max(1, len(x) // 12)
 ax.set_xlim([0, len(x) - 1])
 ax.set_xticks(x[::tick_frequency])
 ax.set_xticklabels(
-    pd.to_datetime(weekly_prop.index).strftime('%b %d %Y')[::tick_frequency],
+    pd.to_datetime(weekly_prop.index + '-1', format='%Y-w%W-%w')
+    .strftime('%b %d %Y')[::tick_frequency],
     rotation=45,
     ha='right'
 )

@@ -221,10 +221,11 @@ print(
 #%% 3. TRANSFORM DATA
 # =============================================================================
 
-print('\nExtracting start date, month, day of week, and hour...')
+print('\nExtracting start date, month, week, day of week, and hour...')
 
 df['start_date'] = df['started_at'].dt.strftime('%Y-%m-%d')
 df['start_month'] = df['started_at'].dt.strftime('%Y-%m')
+df['start_week'] = df['started_at'].dt.strftime('%Y-w%W')
 df['start_weekday'] = df['started_at'].dt.strftime('%w').astype(int)
 df['start_hour'] = df['started_at'].dt.hour
 
