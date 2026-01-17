@@ -10,7 +10,7 @@ Cyclistic Bike-Share Analysis Case Study Python Script (Part 2 of 3)
 
 Description:
     Imports cleaned dataset, performs statistical analysis to
-    compare user behavior, and generates static visualizations
+    compare rider behavior, and generates static visualizations
     to illustrate key findings.
 
 Inputs:

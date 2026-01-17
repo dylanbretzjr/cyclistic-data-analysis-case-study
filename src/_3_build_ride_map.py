@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Cyclistic Bike-Share Analysis Case Study Python Script (Part 3 of 3)
-- Build interactive ride map
-
 @author: Dylan Bretz Jr.
 
+Cyclistic Bike-Share Analysis Case Study Python Script (Part 3 of 3)
+- Build dynamic ride map
+
 Description:
-    Imports cleaned dataset and generates an interactive,
-    density-weighted ride map visualizing ride start and
+    Imports cleaned dataset and builds a dynamic,
+    density-weighted map visualizing ride start and
     end locations by membership status using Plotly and
-    custom JavaScript to synchronize pan/zoom.
+    custom JavaScript.
 
 Inputs:
     - '../data/processed/divvy-combined-cleaned.csv'
