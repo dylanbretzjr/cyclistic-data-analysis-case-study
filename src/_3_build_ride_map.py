@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 """
 Cyclistic Bike-Share Analysis Case Study Python Script (Part 3 of 3)
-- Build interactive point map
+- Build interactive ride map
 
 @author: Dylan Bretz Jr.
 
 Description:
     Imports cleaned dataset and generates an interactive,
-    density-weighted point map visualizing ride start and
+    density-weighted ride map visualizing ride start and
     end locations by membership status using Plotly and
     custom JavaScript to synchronize pan/zoom.
 
