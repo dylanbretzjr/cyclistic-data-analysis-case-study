@@ -632,11 +632,11 @@ print('\nDropping rides 1 min or less and 1 day or more...')
 
 print(
     'Total rides lasting 1 minute or less:',
-    f'{len(df[df["ride_duration_min"] < 1]):,}'
+    f'{len(df[df["ride_duration_min"] <= 1]):,}'
 )
 print(
     'Total rides lasting 1 day or more:',
-    f'{len(df[df["ride_duration_min"] > 1440]):,}'
+    f'{len(df[df["ride_duration_min"] >= 1440]):,}'
 )
 
 df = apply_filter(
