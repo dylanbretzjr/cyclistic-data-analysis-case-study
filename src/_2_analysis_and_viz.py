@@ -595,7 +595,7 @@ plt.show()
 pivot_weekday_prop = (
     sum_weekday
     .pivot(index='start_weekday', columns='member_casual', values='percentage')
-    .reindex(range(7), fill_value=0)  # ensure Sun–Sat present
+    .reindex(range(7), fill_value=0)
     .sort_index()
 )
 
