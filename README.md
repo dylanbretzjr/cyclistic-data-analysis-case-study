@@ -14,5 +14,5 @@ These findings support strategies focused on converting casual riders during pea
 **Project highlights:**
 
 - [Project write-up](https://dylanbretzjr.com/projects/cyclistic-case-study/)
-- [Google Slides presentation](https://docs.google.com/presentation/d/1QIhYy39x3hqI8Ahvh6gUQBD8TNX5YNHvGoN-5PVd13U/present#slide=id.g3b209955022_0_2985){target="_blank" rel="noopener"}
-- [Interactive ride location map](./cyclistic-ride-map/){target="_blank" rel="noopener"}
+- [Google Slides presentation](https://docs.google.com/presentation/d/1QIhYy39x3hqI8Ahvh6gUQBD8TNX5YNHvGoN-5PVd13U/present#slide=id.g3b209955022_0_2985)
+- [Interactive ride location map](./cyclistic-ride-map/)
